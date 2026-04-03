@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Haggard Destination AG</title>
+  <title>Gallery</title>
   <style>
     #gallery {
       display: flex;
@@ -35,6 +35,7 @@
 
 <body>
 
+  <!-- ✅ THIS is what your script needs -->
   <div id="gallery"></div>
 
   <div id="modal">
@@ -46,47 +47,51 @@
     <button onclick="nextImage()" style="position:absolute; right:20px;">▶</button>
   </div>
 
-<script>
-const gallery = document.getElementById("gallery");
-const modal = document.getElementById("modal");
-const modalImg = document.getElementById("modal-img");
+  <!-- ✅ Your script goes at the bottom -->
+  <script>
+    const gallery = document.getElementById("gallery");
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modal-img");
 
-let currentIndex = 0;
-let images = [];
+    let currentIndex = 0;
+    let images = [];
 
-fetch("images3.json")
-  .then(res => res.json())
-  .then(data => {
-    images = data;
+    fetch("images3.json")
+      .then(res => res.json())
+      .then(data => {
+        images = data;
 
-    images.forEach((src, index) => {
-      const img = document.createElement("img");
-      img.src = "images/" + src;
-      img.className = "gallery-img";
+        images.forEach((src, index) => {
+          const img = document.createElement("img");
+          img.src = "images/" + src;
+          img.className = "gallery-img";
 
-      img.onclick = () => openModal(index);
+          img.onclick = () => openModal(index);
 
-      gallery.appendChild(img);
-    });
-  });
+          gallery.appendChild(img);
+        });
+      });
 
-function openModal(index) {
-  currentIndex = index;
-  modal.style.display = "flex";
-  modalImg.src = "images/" + images[index];
-}
+    function openModal(index) {
+      currentIndex = index;
+      modal.style.display = "flex";
+      modalImg.src = "images/" + images[index];
+    }
 
-function closeModal() {
-  modal.style.display = "none";
-}
+    function closeModal() {
+      modal.style.display = "none";
+    }
 
-function nextImage() {
-  currentIndex = (currentIndex + 1) % images.length;
-  modalImg.src = "images/" + images[currentIndex];
-}
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      modalImg.src = "images/" + images[currentIndex];
+    }
 
-function prevImage() {
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  modalImg.src = "images/" + images[currentIndex];
-}
-</script>
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      modalImg.src = "images/" + images[currentIndex];
+    }
+  </script>
+
+</body>
+</html>
